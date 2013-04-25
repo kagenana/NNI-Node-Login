@@ -3,8 +3,7 @@
  * GET home page.
  */
 
-var users = { 'nanako': 'midnana25' };
-
+var users = { 'username': 'password' };
 exports.login = function(req, res, next) {
   var user = req.body.user;
   if (user) {
