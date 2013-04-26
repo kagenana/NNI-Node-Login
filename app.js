@@ -6,7 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , flash = require('connect-flash');
 
 var app = express();
 
@@ -20,6 +21,12 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('koobkooCedoN'));
 app.use(express.session());
+app.use(flash());
+app.use(require('./login'));
+app.use(function(req, res, next) {
+  res.locals.user = req.session.user;
+  next();
+});
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -29,8 +36,9 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.post('/', routes.login, routes.index);
-app.del('/', routes.logout, routes.index);
+app.post('/', routes.index);
+app.del('/', routes.index);
+app.get('/:page', routes.index);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
