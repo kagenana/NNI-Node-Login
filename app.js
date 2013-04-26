@@ -25,6 +25,7 @@ app.use(flash());
 app.use(require('./login'));
 app.use(function(req, res, next) {
   res.locals.user = req.session.user;
+  res.locals.flash = req.flash();
   next();
 });
 app.use(app.router);

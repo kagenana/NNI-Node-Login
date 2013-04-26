@@ -20,18 +20,28 @@ module.exports = function(req, res, next) {
     delete req.session.user;
   }
   if (login) {
-    var valid = Object.keys(users).some(function(name) {
-      return (user.name === name && user.pwd === users[name]);
+    validate(user, function(err) {
+      if (!err) {
+        req.session.user = {
+          name: user.name,
+          pwd: user.pwd
+        };
+      } else {
+        req.flash('error', err.msg);
+        req.url = '/';
+      }
+      next();
     });
-    if (valid) {
-      req.session.user = {
-        name: user.name,
-        pwd: user.pwd
-      };
-    } else {
-      req.flash('error', 'ログイン情報に誤りがあります。');
-    }
+  } else {
+    if (!req.session.user) { req.url = '/' }
+    next();
   }
-  if (!req.session.user) { req.url = '/' }
-  next();
 }
+
+function validate(user, cb) {
+  var valid = Object.keys(users).some(function(name) {
+    return (user.name === name && user.pwd === users[name]);
+  });
+  cb((!valid && { msg: 'ログイン情報に誤りがあります。'}));
+}
+
