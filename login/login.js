@@ -1,6 +1,8 @@
-var users = { 'username': 'password' };
-
 module.exports = function(req, res, next) {
+  var mongo = require('mongoskin');
+  var db = mongo.db('localhost:27017/profiler');
+  var users = db.collection('users');
+
   var method = req.method.toLowerCase();
   var user = req.body.user;
   var logout = (method === 'delete');
@@ -39,9 +41,13 @@ module.exports = function(req, res, next) {
 }
 
 function validate(user, cb) {
-  var valid = Object.keys(users).some(function(name) {
-    return (user.name === name && user.pwd === users[name]);
+  users.findOne({ name: user.name, pwd: user.pwd }, function(err, user) {
+    if (err) { throw err; }
+    if (!user) {
+      cb({ msg: 'ログイン情報に誤りがあります。'});
+      return;
+    }
+    cb();
   });
-  cb((!valid && { msg: 'ログイン情報に誤りがあります。'}));
 }
 

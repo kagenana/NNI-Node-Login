@@ -9,7 +9,7 @@ var express = require('express')
   , path = require('path')
   , flash = require('connect-flash');
 
-var app = express();
+var app = module.exports = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -21,6 +21,10 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser('koobkooCedoN'));
 app.use(express.session());
+app.use(require('stylus').middleware({
+  src: __dirname + 'views',
+  dest: __dirname + 'public'
+}));
 app.use(flash());
 app.use(require('./login'));
 app.use(function(req, res, next) {
@@ -36,11 +40,15 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-app.get('/', routes.index);
-app.post('/', routes.index);
-app.del('/', routes.index);
-app.get('/:page', routes.index);
+app.get('/:pagenum([0-9]+)?', routes.index);
+app.post('/:pagenum([0-9]+)?', routes.index);
+app.del('/:pagenum([0-9]+)?', routes.index);
+app.get('/del', routes.delprof);
+app.post('/add', routes.addprof, routes.index);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-});
+if (!module.parent) {
+	http.createServer(app).listen(app.get('port'), function(){
+	  console.log("Express server listening on port " + app.get('port'));
+	});
+}
+

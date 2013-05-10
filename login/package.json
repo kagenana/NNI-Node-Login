@@ -9,7 +9,5 @@
     "express": "3.1.2",
     "jade": "0.27.x",
     "connect-flash": "*",
-    "stylus": "0.30.x",
-    "mongoskin": "0.4.4"
   }
 }

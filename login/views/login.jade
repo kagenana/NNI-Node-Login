@@ -7,6 +7,8 @@ if user
     input(name='_method', type='hidden', value='DELETE')
     p #{user.name}さん、こんにちは！
       a(href='javascript:', onClick='forms[0].submit()') [ログアウト]
+  include admin
+  include ../../views/profiles
 else
   p ログインしてください
   form(method='post')
