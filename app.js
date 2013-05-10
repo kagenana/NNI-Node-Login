@@ -21,8 +21,8 @@ app.configure(function(){
   app.use(express.methodOverride());
 
   app.use(require('stylus').middleware({
-    src: __dirname + 'views',
-    dest: __dirname + 'public'
+    src: __dirname + '/views',
+    dest: __dirname + '/public'
   }));
 
   app.use(app.router);
