@@ -2,8 +2,8 @@ var mongo = require('mongoskin');
 var db = mongo.db('localhost:27017/profiler');
 var profiles = require('./profiles');
 var users = [
-  { name: 'dave', pwd: 'expressrocks' },
-  { name: 'MrPage', pwd: 'hellomynameismrpage' }
+  { name: 'admin', pwd: 'password' },
+  { name: 'user', pwd: 'password' }
 ];
 
 db.collection('users').remove({});

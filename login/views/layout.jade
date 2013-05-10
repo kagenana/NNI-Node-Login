@@ -2,6 +2,10 @@ doctype 5
 html
   head
     title= title
-    link(rel='stylesheet', href='/admin/stylesheets/admin.css')
+    if user
+      link(rel='stylesheet', href='/admin/stylesheets/admin.css')
+    else
+      link(rel='stylesheet', href='/stylesheets/style.css')
   body
     block content
+

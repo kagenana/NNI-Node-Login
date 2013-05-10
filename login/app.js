@@ -12,28 +12,30 @@ var express = require('express')
 var app = module.exports = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(express.cookieParser('koobkooCedoN'));
-app.use(express.session());
-app.use(require('stylus').middleware({
-  src: __dirname + 'views',
-  dest: __dirname + 'public'
-}));
-app.use(flash());
-app.use(require('./login'));
-app.use(function(req, res, next) {
-  res.locals.user = req.session.user;
-  res.locals.flash = req.flash();
-  next();
+app.configure(function(){
+  app.set('port', process.env.PORT || 3000);
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+  app.use(express.favicon());
+  //app.use(express.logger('dev'));
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(express.cookieParser('koobkooCedoN'));
+  app.use(express.session());
+  app.use(require('stylus').middleware({
+    src: __dirname + 'views',
+    dest: __dirname + 'public'
+  }));
+  app.use(flash());
+  app.use(require('./login'));
+  app.use(function(req, res, next) {
+    res.locals.user = req.session.user;
+    res.locals.flash = req.flash();
+    next();
+  });
+  app.use(app.router);
+  app.use(express.static(path.join(__dirname, 'public')));
 });
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
 if ('development' == app.get('env')) {
