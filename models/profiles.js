@@ -4,7 +4,7 @@ var profs = db.collection('profiles');
 
 exports.pull = function pull(page, cb) {
   var p = {};
-  var rowsPer = 2;
+  var rowsPer = 10;
   var skip;
   var errs;
 
