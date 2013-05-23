@@ -88,7 +88,7 @@ tbody td .del:hover {
   display: none;
 }
 #addfrm {
-  width: 250px;
+  width: 420px;
 }
 #addfrm label {
   display: block;
@@ -97,6 +97,14 @@ tbody td .del:hover {
   font-weight: bold;
 }
 #addfrm .btns {
-  width: 250px;
-  text-align: right;
+  text-align: center;
+}
+#addfrm label.error {
+  width: 120px;
+  float: right;
+  font-size: 0.8em;
+  margin: 5px 0px 0px 0px;
+  text-align: left;
+  border-bottom: 1px dotted #333;
+  color: #f00;
 }
