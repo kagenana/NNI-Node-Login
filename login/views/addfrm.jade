@@ -1,5 +1,4 @@
 fields = ['Name', 'Irc', 'Twitter', 'Github', 'Location', 'Description'];
-
 form#addfrm(method='post', action='/admin/add')
   fieldset
     legend add
@@ -10,3 +9,48 @@ form#addfrm(method='post', action='/admin/add')
     .btns
       button.cancel(type='button') キャンセル
       input(type='submit', value='追加');
+script(type="text/javascript")
+  $(function(){
+    $('#addfrm').validate({
+      rules: {
+        'profile[name]' :{
+          required: true
+        },
+        'profile[irc]' :{
+          required: true
+        },
+        'profile[twitter]' :{
+          required: true
+        },
+        'profile[github]' :{
+          required: true
+        },
+        'profile[location]' :{
+          required: true
+        },
+        'profile[description]' :{
+          required: true
+        }
+      },
+      messages: {
+        'profile[name]' :{
+          required: "入力必須項目です。"
+        },
+        'profile[irc]' :{
+          required: "入力必須項目です。"
+        },
+        'profile[twitter]' :{
+          required: "入力必須項目です。"
+        },
+        'profile[github]' :{
+          required: "入力必須項目です。"
+        },
+        'profile[location]' :{
+          required: "入力必須項目です。"
+        },
+        'profile[description]' :{
+          required: "入力必須項目です。"
+        }
+      }
+    });
+  })
